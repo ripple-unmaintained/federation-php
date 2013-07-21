@@ -38,8 +38,7 @@ function run()
       'domain' => $domain
   );
 
-  echo json_encode($result, JSON_PRETTY_PRINT);
-  exit;
+  send_result($result);
 }
 
 function send_error($errCode, $errMsg) {
@@ -49,7 +48,15 @@ function send_error($errCode, $errMsg) {
   $result['error'] = $errCode;
   $result['error_message'] = $errMsg;
 
-  echo json_encode($result, JSON_PRETTY_PRINT);
+  send_result($result);
+}
+
+function send_result($result) {
+  if (defined('JSON_PRETTY_PRINT')) {
+    echo json_encode($result, JSON_PRETTY_PRINT);
+  } else {
+    echo json_encode($result);
+  }
   exit;
 }
 
