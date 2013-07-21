@@ -2,7 +2,7 @@
 
 function run()
 {
-  $data = json_decode(file_get_contents(dirname(__FILE__) . '/data.json'));
+  $data = json_decode(file_get_contents(dirname(__FILE__) . '/private/data.json'));
 
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');

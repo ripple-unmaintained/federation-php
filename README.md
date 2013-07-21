@@ -8,7 +8,7 @@ endpoint with a static list of users.
 ``` sh
 git clone https://github.com/ripple/federation-php.git federation
 cd federation
-cp data-example.json data.json
+cp private/data-example.json private/data.json
 ```
 
 Edit data.json to set your domain and your username -> address mappings.
@@ -31,6 +31,9 @@ Then just [point](https://ripple.com/wiki/Federation_protocol#Service_declaratio
 [federation_url]
 https://example.com/federation/
 ```
+
+You should configure your webserver to disallow access to the
+`/federation/private/` folder.
 
 # License
 
