@@ -3,7 +3,7 @@
 This projects provides some PHP example code to set up a trivial federation
 endpoint with a static list of users.
 
-# Usage
+# Quickstart
 
 ``` sh
 git clone https://github.com/ripple/federation-php.git federation
@@ -34,6 +34,31 @@ https://example.com/federation/
 
 You should configure your webserver to disallow access to the
 `/federation/private/` folder.
+
+# Configuration
+
+The basic configuration format is:
+
+{
+  "[domain]": {
+    "[user]": "[Ripple address]"
+  }
+}
+
+## Domain aliases
+
+You can alias one domain to another one like so:
+
+{
+  "example.com": {
+    "testuser": "rNDKeo9RrCiRdfsMG8AdoZvNZxHASGzbZL"
+  },
+  "example-alias.com": "example.com"
+}
+
+Any query against an alias domain will be answered as if it was against the
+original domain. In the example above a query for domain `example-alias.com` and
+user `testuser` would be answered as `rNDKeo9RrCiRdfsMG8AdoZvNZxHASGzbZL`.
 
 # License
 

@@ -2,10 +2,14 @@
 
 function run()
 {
-  $data = json_decode(file_get_contents(dirname(__FILE__) . '/private/data.json'));
-
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
+
+  $data = json_decode(file_get_contents(dirname(__FILE__) . '/private/data.json'));
+
+  if (!$data) {
+    send_error('unavailable', 'The endpoint is unable to read its configuration file.');
+  }
 
   $result = array();
 
@@ -20,6 +24,21 @@ function run()
   }
 
   $users = $data->{$domain};
+
+  $visited = array();
+  while (is_string($users)) {
+    if (!isset($data->{$users})) {
+      send_error('unavailable', 'Misconfigured domain alias.');
+    }
+
+    if (isset($visited[$users])) {
+      send_error('unavailable', 'Circular domain alias.');
+    } else {
+      $visited[$users] = true;
+    }
+
+    $users = $data->{$users};
+  }
 
   if (!isset($_GET['user']) || !strlen($_GET['user'])) {
     send_error('invalidParams', 'No username provided.');
