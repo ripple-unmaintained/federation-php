@@ -17,7 +17,7 @@ function run()
     send_error('invalidParams', 'No domain provided.');
   }
 
-  $domain = $_GET['domain'];
+  $domain = strtolower($_GET['domain']);
 
   if (!isset($data->{$domain})) {
     send_error('noSuchDomain', 'The supplied domain is not served here.');
@@ -44,7 +44,7 @@ function run()
     send_error('invalidParams', 'No username provided.');
   }
 
-  $user = $_GET['user'];
+  $user = strtolower($_GET['user']);
 
   if (!isset($users->{$user})) {
     send_error('noSuchUser', 'The supplied user was not found.');
