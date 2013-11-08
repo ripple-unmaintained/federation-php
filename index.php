@@ -40,11 +40,14 @@ function run()
     $users = $data->{$users};
   }
 
-  if (!isset($_GET['user']) || !strlen($_GET['user'])) {
+  if (isset($_GET['destination']) && strlen($_GET['destination'])) {
+    $user = strtolower($_GET['destination']);
+  } elseif (isset($_GET['user']) && strlen($_GET['user'])) {
+    // DEPRECATED
+    $user = strtolower($_GET['user']);
+  } else {
     send_error('invalidParams', 'No username provided.');
   }
-
-  $user = strtolower($_GET['user']);
 
   if (!isset($users->{$user})) {
     send_error('noSuchUser', 'The supplied user was not found.');
@@ -52,7 +55,8 @@ function run()
 
   $result['federation_json'] = array(
       'type' => 'federation_record',
-      'user' => $user,
+      'destination' => $destination,
+      'user' => $user, // DEPRECATED
       'destination_address' => $users->{$user},
       'domain' => $domain
   );
